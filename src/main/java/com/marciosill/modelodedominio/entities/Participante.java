@@ -2,7 +2,9 @@ package com.marciosill.modelodedominio.entities;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_participantes")
@@ -17,13 +19,17 @@ public class Participante {
     @Column(unique = true) //para se um email unico
     private String email;
 
+    @ManyToMany(mappedBy = "participantes")
+    private Set<Atividade> atividades= new HashSet<>();
+
     public Participante() {
     }
 
-    public Participante(Integer id, String name, String email) {
+    public Participante(Integer id, String name, String email, Set<Atividade> atividades) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.atividades = atividades;
     }
 
     public Integer getId() {
@@ -32,6 +38,10 @@ public class Participante {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Set<Atividade> getAtividades() {
+        return atividades;
     }
 
     public String getName() {
@@ -49,4 +59,5 @@ public class Participante {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }
